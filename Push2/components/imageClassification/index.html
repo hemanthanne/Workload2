@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Image Classification</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+    <!-- Jquery -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+    <!-- Load TensorFlow.js. This is required to use MobileNet. -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.1"> </script>
+    <!-- Load the MobileNet model. -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0"> </script>
+    <!-- Adds the WASM backend to the global backend registry -->
+    <!-- <script src="'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm/dist/tfjs-backend-wasm.wasm'"></script> -->
+
+    <!-- Import @tensorflow/tfjs or @tensorflow/tfjs-core -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"> </script> -->
+
+    <!-- Adds the WASM backend to the global backend registry -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm/dist/tf-backend-wasm.js"></script>
+
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+
+    <!-- custom CSS -->
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="../../assets/css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/spinner.css">
+    <link rel="stylesheet" href="../../assets/css/margins_heights.css">
+
+  </head>
+
+
+  <body>
+
+    <!-- Navbar  -->
+    <nav class="navbar bg-body-tertiary sticky-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="../../assets/images/WebXPRT-4-logo.svg" alt="Logo" width="90" height="40">
+          </a>
+          <p >Image Classification</p>                   
+        </div>
+    </nav>
+
+      <!-- body -->
+      <div class="container-fluid mt-3">
+        <div class="row" >
+            <div class="col-lg-9">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="../../index.html">Home</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">Image Classification</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-lg-3">
+                <select class="form-select form-select-sm" id="backendDP">
+                    <option value="select" disabled >Choose a Backend</option>
+                    <option value="webgl">WEBGL</option>
+                    <option value="cpu">CPU</option>
+                    <option value="wasm">WASM</option>
+                  </select>
+            </div>
+        </div>
+        <h6 class="font-09em fw-bold mt-3" id="durationTime"></h6> 
+
+        <!-- spinner -->
+        <!-- <div class="row text-center">
+          <div class="col-12" id="spinner">
+            <div class="spinner-grow text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="spinner-grow text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="spinner-grow text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <header class="loader--title">Loading...</header>
+          </div>
+        </div> -->
+        <!-- <div class="row mt-5 ">
+          <div class="col-lg-3">
+            <div class="card rounded">
+              <div class="images"></div>
+              <div class="card-footer text-center fw-bold text-capitalize ht-40">
+                <p id="imgval0"></p>
+            </div>
+            </div>
+          </div> -->
+
+        <!-- </div> -->
+
+        <div class="row mt-5 ">
+            <div class="col-lg-3">
+                <div class="card rounded">
+                    <img class="image" id="img0" src="../../assets/images/imageClassification/1.jpeg" alt="...">
+                    <div class="card-footer text-center fw-bold text-capitalize ht-40">
+                      <div class="spinner-grow spinner-grow-sm" role="status" id="spinner"></div>
+                        <p id="imgval0"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card rounded">
+                    <img class="image" id="img1" src="../../assets/images/imageClassification/2.jpeg" alt="...">
+                    <div class="card-footer text-center fw-bold text-capitalize ht-40">
+                      <div class="spinner-grow spinner-grow-sm" role="status" id="spinner1"></div>
+                        <p id="imgval1"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card rounded">
+                    <img id="img2" src="../../assets/images/imageClassification/3.jpeg" alt="...">
+                    <div class="card-footer text-center fw-bold text-capitalize ht-40">
+                        <div class="spinner-grow spinner-grow-sm" role="status" id="spinner2"></div>
+                        <p id="imgval2"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card rounded">
+                    <img id="img3" src="../../assets/images/imageClassification/4.jpeg" alt="...">
+                    <div class="card-footer text-center fw-bold text-capitalize ht-40">
+                        <div class="spinner-grow spinner-grow-sm" role="status" id="spinner3"></div>
+                        <p id="imgval3"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      </div>
+
+    <!-- script tags -->
+    <script src="../../components/imageClassification/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  </body>
+</html>
